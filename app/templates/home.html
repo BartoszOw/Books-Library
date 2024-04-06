@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% block style %}
+<style>
+    #book_h1 {
+        margin: 100px 0 100px 0;
+        text-align: center;
+    }
+    #accordion {
+        text-align: center;
+    }
+    .btn-d {
+        text-align: left;
+    }
+    .button-container {
+        display: flex;
+        justify-content: center;
+    }
+    .body-opt {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<h1 id="book_h1"> Books in our Library!</h1>
+
+<div id="accordion">
+    {% for a_book in author_book %}
+        <div class="card{% if loop.index > 4 %} d-none{% endif %}">
+            <div class="card-header" id="heading{{ loop.index }}">
+                <h5 class="mb-0">
+                    <button class="btn btn-d" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="false" aria-controls="collapse{{ loop.index }}">
+                        Name: <b>{{ a_book.book.name }}</b> <br>
+                        Author: <b>{{ a_book.author.first_name }} {{ a_book.author.sec_name }}</b>
+                    </button>
+                </h5>
+            </div>
+            <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#accordion">
+                <div class="card-body body-opt">
+                    <div class="left-col">
+                        Genre: <b>{{ a_book.book.genre }}</b>
+                    </div>
+                    <div class="right-col">
+                        {% set book_has_loan = false %}
+                        {% for l in loans %}
+                        {% if l.book_author_id == a_book.id %}
+                            {% set book_has_loan = true %}
+                            <div class="right-col">
+                                Loan: {{ l.borrower_name }}
+                            </div>
+                        {% endif %}
+                        {% endfor %}
+                            
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<div class="button-container">
+    <button id="showMoreBtn" class="btn btn-primary mt-3">Show more</button>
+</div>
+
+<script>
+     document.getElementById('showMoreBtn').addEventListener('click', function() {
+        var hiddenCards = document.querySelectorAll('.card.d-none');
+        hiddenCards.forEach(function(card) {
+            card.classList.remove('d-none');
+        });
+        document.getElementById('showMoreBtn').style.display = 'none';
+        });
+</script>
+{% endblock %}
