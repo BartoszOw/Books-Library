@@ -1,5 +1,5 @@
 from app import app,db
-from app.models import Book, Author, AuthorBook, Return, Loan
+from app.models import Book, Author, AuthorBook, Loan
 from flask import render_template
 
 
@@ -11,7 +11,6 @@ def make_shell_context():
         'Author': Author,
         'AuthorBook': AuthorBook,
         'Loan': Loan,
-        'Return': Return
     }
 
 
@@ -21,5 +20,4 @@ def homepage():
 
     author_book = AuthorBook.query.all()
     loans = Loan.query.all()
-    returns = Return.query.all()
-    return render_template('home.html', author_book=author_book, loans=loans, returns=returns)
+    return render_template('home.html', author_book=author_book, loans=loans)

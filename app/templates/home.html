@@ -20,6 +20,19 @@
         flex-direction: row;
         justify-content: space-around;
     }
+    .left-col {
+        display: flex;
+        flex-direction: column;
+    }
+    .right-col {
+        display: flex;
+        flex-direction: column;
+    }
+    p {
+        font-size: 1em;
+        max-width: 200px;
+        text-align: center;
+    }
 </style>
 {% endblock %}
 {% block content %}
@@ -40,18 +53,24 @@
                 <div class="card-body body-opt">
                     <div class="left-col">
                         Genre: <b>{{ a_book.book.genre }}</b>
+                        Description: <p><b>{{a_book.book.description}}</b></p>
                     </div>
                     <div class="right-col">
-                        {% set book_has_loan = false %}
-                        {% for l in loans %}
-                        {% if l.book_author_id == a_book.id %}
-                            {% set book_has_loan = true %}
-                            <div class="right-col">
-                                Loan: {{ l.borrower_name }}
-                            </div>
-                        {% endif %}
+                        {% if a_book.loans %}
+                        {% if a_book.loans[0].returned == 0 %}
+                            <span style="color: red;">Loaned</span>
+                            {% for l in loans %}
+                            {% if l.book_author_id == a_book.id %}
+                                Loan for: <b>{{ l.borrower_name }}</b>
+                                Time to return: <b>{{ l.return_date }}</b>
+                            {% endif %}
                         {% endfor %}
-                            
+                        {% else %}
+                            <span style="color: green;">Available</span>
+                        {% endif %}
+                        {% else %}
+                            <span style="color: green;">Available</span>
+                        {% endif %}
                     </div>
                 </div>
             </div>

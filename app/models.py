@@ -16,6 +16,7 @@ class Book(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), index=True, unique=True)
     genre = db.Column(db.String(100))
+    description = db.Column(db.Text)
     author_book = db.relationship("AuthorBook", back_populates="book")
     
     def __str__(self) -> str:
@@ -29,12 +30,7 @@ class Loan(db.Model):
     borrower_date = db.Column(db.Text)
     return_date = db.Column(db.Text)
     returned = db.Column(db.Boolean, default=False)
-
-class Return(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    loan_id = db.Column(db.Integer, db.ForeignKey('loan.id'))
-    returned_date = db.Column(db.Text)
-
+    author_book = db.relationship('AuthorBook', back_populates='loans')
     
 class AuthorBook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -42,3 +38,4 @@ class AuthorBook(db.Model):
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'))
     book = db.relationship("Book", back_populates="author_book")
     author = db.relationship("Author", back_populates="author_book")
+    loans = db.relationship('Loan', back_populates='author_book')
