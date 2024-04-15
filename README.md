@@ -32,6 +32,10 @@ The Books Library project is designed to manage a library's book inventory and l
   git clone https://github.com/BartoszOw/Books-Library.git
   ```
 - Set up a virtual environment and install the required dependencies `(Flask, Flask-SQLAlchemy, Flask-Migrate, Jinja2, Bootstrap)`.
+
+  ```
+  pip install -r requirements.txt
+  ```
 - Run the Flask application using `flask run` command.
 - Access the web interface through a web browser.
 Contributing:
