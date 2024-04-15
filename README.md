@@ -27,6 +27,7 @@ The Books Library project is designed to manage a library's book inventory and l
 ## Usage:
 
 - Clone the repository to your local machine.
+  
   ```
   git clone https://github.com/BartoszOw/Books-Library.git
   ```
